@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GM : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class GM : MonoBehaviour
     {
         GAMEOVER,
         RESTART,
+        PLAY,
         LOSE
     }
 
@@ -27,13 +29,20 @@ public class GM : MonoBehaviour
                 case GAMESTATE.LOSE:
                     Gamestate = GAMESTATE.GAMEOVER;
                     break;
+
                 case GAMESTATE.GAMEOVER:
                     DisplayGameOver();
                     break;
+
                 case GAMESTATE.RESTART:
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                    break;
+
+                case GAMESTATE.PLAY:
                     DisplayRestart();
                     Instantiate(player);
                     break;
+
             }
 
         }
@@ -45,6 +54,8 @@ public class GM : MonoBehaviour
 
     public GameObject InGameCanvas;
     public GameObject GameOverCanvas;
+
+    Spawner spawner;
 
     public Text scoreText;
     public Text scoreEndText;
@@ -59,7 +70,8 @@ public class GM : MonoBehaviour
     //-------
     void Awake()
     {
-        Gamestate = GAMESTATE.RESTART;
+        Gamestate = GAMESTATE.PLAY;
+        spawner = FindObjectOfType<Spawner>();
     }
 
 

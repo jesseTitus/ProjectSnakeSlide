@@ -79,5 +79,9 @@ public class Spawner : MonoBehaviour
     {
         transform.position += new Vector3(0, spawnRate, 0);
     }
-    
+
+    public void Reset()
+    {
+        //TODO - destroy all
+    }
 }
