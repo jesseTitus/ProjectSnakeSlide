@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuyGemsButton : ButtonAction {
-
-    void Start()
+public class BuyGemsButton : MonoBehaviour, IButtonAction
+{
+    public void Execute()
     {
-        ActionImplemented = BUTTON_ACTIONS.BUY_GEMS;
+        Debug.Log("Open up gems microtransaction");
     }
 }

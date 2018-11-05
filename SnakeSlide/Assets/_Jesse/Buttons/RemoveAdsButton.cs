@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RemoveAdsButton : ButtonAction
+public class RemoveAdsButton : MonoBehaviour, IButtonAction
 {
-    void Start()
+    public void Execute()
     {
-        ActionImplemented = BUTTON_ACTIONS.REMOVE_ADS;
+        Debug.Log("Prompt player to remove ads");
     }
 }

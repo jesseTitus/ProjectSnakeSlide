@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WatchAdButton : ButtonAction {
-    void Start()
+public class WatchAdButton : MonoBehaviour, IButtonAction
+{
+    public void Execute()
     {
-        ActionImplemented = BUTTON_ACTIONS.WATCH_AD;
+        Debug.Log("Watching ad...");
     }
 }

@@ -33,7 +33,10 @@ public class Follow : MonoBehaviour
     {
         var player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
+        {
+            Debug.Log("Player not found... can't follow");
             return;
+        }
 
         FollowTransform = player.transform;
 

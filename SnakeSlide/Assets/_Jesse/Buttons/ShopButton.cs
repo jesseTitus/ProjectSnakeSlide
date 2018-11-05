@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShopButton : ButtonAction {
-    void Start()
+public class ShopButton : MonoBehaviour, IButtonAction
+{
+    public void Execute()
     {
-        ActionImplemented = BUTTON_ACTIONS.SHOP;
+        Debug.Log("Open shop");
     }
 }

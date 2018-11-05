@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShareButton : ButtonAction {
-    void Start()
+public class ShareButton : MonoBehaviour, IButtonAction
+{
+    public void Execute()
     {
-        ActionImplemented = BUTTON_ACTIONS.SHARE;
+        Debug.Log("Prompt player to share");
     }
 }

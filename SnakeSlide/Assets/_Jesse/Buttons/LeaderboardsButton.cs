@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LeaderboardsButton : ButtonAction {
-
-    void Start()
+public class LeaderboardsButton : MonoBehaviour, IButtonAction
+{
+    public void Execute()
     {
-        ActionImplemented = BUTTON_ACTIONS.LEADERBOARD;
+        Debug.Log("Accessing leaderboards...");
     }
 }

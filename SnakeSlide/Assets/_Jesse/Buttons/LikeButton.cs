@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrophyButton : MonoBehaviour, IButtonAction
+public class LikeButton : MonoBehaviour, IButtonAction
 {
     public void Execute()
     {
-        Debug.Log("Trophy button pressed");
+        Debug.Log("Like button pressed!");
     }
 }

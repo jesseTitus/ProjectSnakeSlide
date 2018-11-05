@@ -112,42 +112,9 @@ public class GM : MonoBehaviour
         InGameCanvas.SetActive(true);
     }
 
-    public void ButtonActivated(ButtonAction.BUTTON_ACTIONS action)
+    public void Restart()
     {
-        switch (action)
-        {
-            case ButtonAction.BUTTON_ACTIONS.LIKE:
-                Debug.Log("Like button pressed!");
-                break;
-
-            case ButtonAction.BUTTON_ACTIONS.LEADERBOARD:
-                Debug.Log("Accessing leaderboards...");
-                break;
-            case ButtonAction.BUTTON_ACTIONS.TROPHY:
-                Debug.Log("Trophy button pressed");
-                break;
-            case ButtonAction.BUTTON_ACTIONS.SHARE:
-                Debug.Log("Prompt player to share");
-                break;
-            case ButtonAction.BUTTON_ACTIONS.RESTART:
-                Gamestate = GAMESTATE.RESTART;
-                Debug.Log("Resart");
-                break;
-            case ButtonAction.BUTTON_ACTIONS.BUY_GEMS:
-                Debug.Log("Open up gems microtransaction");
-                break;
-            case ButtonAction.BUTTON_ACTIONS.SOUND:
-                Debug.Log("Toggle sound");
-                break;
-            case ButtonAction.BUTTON_ACTIONS.SHOP:
-                Debug.Log("Open shop");
-                break;
-            case ButtonAction.BUTTON_ACTIONS.REMOVE_ADS:
-                Debug.Log("Prompt player to remove ads");
-                break;
-            case ButtonAction.BUTTON_ACTIONS.WATCH_AD:
-                Debug.Log("Watching ad...");
-                break;
-        }
+        Gamestate = GAMESTATE.RESTART;
+        
     }
 }

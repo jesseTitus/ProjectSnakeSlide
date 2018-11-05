@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 58838424652971358}
   - component: {fileID: 50189274669942424}
   - component: {fileID: 114185725370821194}
-  - component: {fileID: 114625323730852198}
   m_Layer: 0
   m_Name: Head
   m_TagString: Player
@@ -67,13 +66,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1653270723147860}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.38268343, w: 0.92387956}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4018597582512070}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
 --- !u!50 &50189274669942424
 Rigidbody2D:
   serializedVersion: 4
@@ -108,7 +107,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.39
+  m_Radius: 0.27
 --- !u!114 &114185725370821194
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -120,18 +119,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e04185e2162566745949df6fb937a58d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114625323730852198
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1653270723147860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 490ed1c2b0329bf4eb34a6b7035f8934, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distance: 3
 --- !u!114 &114644999682591156
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -143,14 +130,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3326e1e700211d40b8e8617dd53491d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugMode: 0
+  debugMode: 1
+  framesTracked: 1
   BodyParts:
   - {fileID: 4696005075668596}
-  minDistance: 1
   beginSize: 1
-  spd: 6
+  acceleration: 1.5
+  maxSpeed: 5
   curSpd: 0
-  rotSpd: 50
+  rotSpd: 3
   bodyPrefab: {fileID: 1099867503516534, guid: ebb6555d5c522ea4b85b5bbbab3b53e9, type: 2}
 --- !u!212 &212878993395867596
 SpriteRenderer:

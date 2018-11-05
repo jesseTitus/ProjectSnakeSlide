@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundButton : ButtonAction {
-
-    void Start()
+public class SoundButton : MonoBehaviour, IButtonAction
+{
+    public void Execute()
     {
-        ActionImplemented = BUTTON_ACTIONS.SOUND;
+        Debug.Log("Toggle sound");
     }
 }

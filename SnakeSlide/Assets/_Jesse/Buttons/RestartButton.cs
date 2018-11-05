@@ -2,9 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RestartButton : ButtonAction {
+public class RestartButton : MonoBehaviour, IButtonAction
+{
+    GM gameManager;
+
     void Start()
     {
-        ActionImplemented = BUTTON_ACTIONS.RESTART;
+        gameManager = FindObjectOfType<GM>();
+    }
+    public void Execute()
+    {
+        Debug.Log("Resart");
+        gameManager.Restart();
     }
 }

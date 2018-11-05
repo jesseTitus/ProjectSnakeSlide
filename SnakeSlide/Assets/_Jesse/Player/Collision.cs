@@ -21,7 +21,7 @@ public class Collision : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(string.Format("Player collision: {0}", other.name));
+        //Debug.Log(string.Format("Player collision: {0}", other.name));
 
         if (other.GetComponent<Boundary>() || other.GetComponent<Wall>())
         {
