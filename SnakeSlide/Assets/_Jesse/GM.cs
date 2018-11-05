@@ -27,6 +27,8 @@ public class GM : MonoBehaviour
             switch (value)
             {
                 case GAMESTATE.LOSE:
+                    soundManager.SwitchMusic(false);
+                    soundManager.PlayDieSound();
                     Gamestate = GAMESTATE.GAMEOVER;
                     break;
 
@@ -41,6 +43,7 @@ public class GM : MonoBehaviour
                 case GAMESTATE.PLAY:
                     DisplayRestart();
                     Instantiate(player);
+                    soundManager.SwitchMusic(true);
                     break;
 
             }
@@ -50,6 +53,7 @@ public class GM : MonoBehaviour
 
     #endregion
 
+    public SoundManager soundManager;
     public GameObject player;
 
     public GameObject InGameCanvas;
@@ -78,6 +82,7 @@ public class GM : MonoBehaviour
     #region scoreHandling
     public void PointsUp()
     {
+        soundManager.PlayPointSound();
         if (++points > highScore)
             highScore = points;
 
@@ -86,6 +91,7 @@ public class GM : MonoBehaviour
 
     public void GemsUp()
     {
+        soundManager.PlayGemSound();
         gems++;
     }
 

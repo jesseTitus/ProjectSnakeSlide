@@ -131,7 +131,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMode: 1
-  framesTracked: 1
   BodyParts:
   - {fileID: 4696005075668596}
   beginSize: 1

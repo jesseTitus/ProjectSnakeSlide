@@ -5,11 +5,11 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class TestFollow : MonoBehaviour
 {
-    Queue<Transform> followBuffer = new Queue<Transform>(); // keeps track of parent Transform over time
+    int index;
+    Transformation wayPoint;
 
-    Transform followTransform;
-    Transform oldestTransform;
-    bool firstPiece = false;
+    [Range(0, 20)]
+    public int framesPerRetrieval;
 
     [Range(0f, 1f)]
     public float separation;
@@ -20,59 +20,51 @@ public class TestFollow : MonoBehaviour
     [Range(0.01f, 10f)]
     public float rotationAlignSpeed;
 
-    public void Setup(bool firstPiece, Transform followTransform, Queue<Transform> followBuffer)
+    public void Setup(int index, Transformation spawnPosition)
     {
-        foreach (var transform1 in followBuffer)
-        {
-            Debug.Log("Buffer: " + transform1);
-        }
-        if (followBuffer.Count == 0)
-            Debug.LogError("Empty followBuffer");
+        // Spawn piece
+        this.index = index;
+        separation = (index == 1) ? separation * 1.4f : separation;
+        transform.rotation = spawnPosition.rotation;
+        transform.position = spawnPosition.position - (spawnPosition.up * separation);
 
-        this.firstPiece = firstPiece;
-        this.followTransform = followTransform;
-        this.followBuffer = followBuffer;
-        separation = firstPiece ? separation * 1.4f : separation;
-
-        // Continue tracking transform of parent over time (followBuffer)
-        StartCoroutine("IBuffer");
+        // Start following
+        StartCoroutine("UpdateWayPoint");
     }
 
-    IEnumerator Follow()
+    void Update()
     {
-        while (true)
-        {
+        // 2a. Go directly
+        //transform.position = wayPoint.position;
+        //transform.rotation = wayPoint.rotation;
 
-            transform.position = oldestTransform.position;
-            transform.rotation = oldestTransform.rotation;
+        // 2b. Lerp to
+        //transform.position = Vector3.Slerp(transform.position,
+        //    wayPoint.position -
+        //    (wayPoint.up * separation),
+        //    Time.deltaTime * positionAlignSpeed);
+        transform.position = Vector3.MoveTowards(transform.position, wayPoint.position, separation);
 
-            //transform.position = Vector3.Slerp(transform.position,
-            //    oldestTransform.position - (oldestTransform.up * separation), Time.deltaTime * positionAlignSpeed);
-
-            //transform.rotation = Quaternion.Slerp(transform.rotation, oldestTransform.rotation, Time.deltaTime * rotationAlignSpeed);
-
-            yield return null;
-        }
+        transform.rotation = Quaternion.Slerp(transform.rotation,
+            wayPoint.rotation,
+            Time.deltaTime * rotationAlignSpeed);
     }
 
-    // Store parent transform over time (Circular buffer)
-    // Used to follow exact path
-    // *may store every nth frame and lerp to be more performant
-    IEnumerator IBuffer()
+    IEnumerator UpdateWayPoint()
     {
-        transform.rotation = followTransform.rotation;
-        transform.position = followTransform.position - (followTransform.up * separation);
-
-        oldestTransform = followBuffer.Dequeue();
-        followBuffer.Enqueue(followTransform);
-        StartCoroutine("Follow");
 
         while (true)
         {
-            oldestTransform = followBuffer.Dequeue();
-            followBuffer.Enqueue(followTransform);
-            yield return null;
-            //yield return new WaitForSeconds(1 * Time.deltaTime);   // x * deltaTime = num frames?
+            // 1. RetrieveTran
+            wayPoint = RetrieveTransformation();
+
+            yield return new WaitForSeconds(framesPerRetrieval * Time.deltaTime);   // x * deltaTime = num frames?
         }
+    }
+
+
+    Transformation RetrieveTransformation()
+    {
+        return TransformationBuffer._instance.GetTransformation(index);
     }
 }

@@ -52,9 +52,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9140d9b26be84b94691b97a2e97354fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  separation: 0.537
-  positionAlignSpeed: 1
-  rotationAlignSpeed: 1
+  framesPerRetrieval: 20
+  separation: 0.125
+  positionAlignSpeed: 10
+  rotationAlignSpeed: 10
 --- !u!212 &212073424383892032
 SpriteRenderer:
   m_ObjectHideFlags: 1
