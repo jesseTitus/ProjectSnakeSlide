@@ -135,7 +135,7 @@ MonoBehaviour:
   - {fileID: 4696005075668596}
   beginSize: 1
   acceleration: 1.5
-  maxSpeed: 5
+  maxSpeed: 4
   curSpd: 0
   rotSpd: 3
   bodyPrefab: {fileID: 1099867503516534, guid: ebb6555d5c522ea4b85b5bbbab3b53e9, type: 2}
