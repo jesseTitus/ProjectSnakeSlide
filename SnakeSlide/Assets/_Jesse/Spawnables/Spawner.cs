@@ -75,26 +75,21 @@ public class Spawner : MonoBehaviour
                 DIFFICULTY.NORMAL:
                 DIFFICULTY.EASY;
 
+            var spawnedPiece = PrefabEasyA;
+
             switch (currentDifficulty)
             {
                 case DIFFICULTY.EASY:
                     if (levelType == TYPE.A)
                     {
-                        var spawnVector = new Vector3(PrefabEasyA.transform.position.x,
-                            transform.position.y + PrefabEasyA.transform.position.y);
-                        Instantiate(PrefabEasyA, spawnVector, Quaternion.identity);
-
+                        spawnedPiece = PrefabEasyA;
                     } else if (levelType == TYPE.B)
                     {
-                        var spawnVector = new Vector3(PrefabEasyB.transform.position.x,
-                            transform.position.y + PrefabEasyA.transform.position.y);
-                        Instantiate(PrefabEasyB, spawnVector, Quaternion.identity);
+                        spawnedPiece = PrefabEasyB;
 
-                    } else if (levelType == TYPE.C && levelType != TYPE.B || levelType != TYPE.A)
+                    } else if (levelType == TYPE.C)
                     {
-                        var spawnVector = new Vector3(PrefabNormalA.transform.position.x,
-                            PrefabNormalA.transform.position.y + transform.position.y);
-                        Instantiate(PrefabNormalA, spawnVector, Quaternion.identity);
+                        spawnedPiece = PrefabEasyC;
                     }
 
                     break;
@@ -102,23 +97,17 @@ public class Spawner : MonoBehaviour
                 case DIFFICULTY.NORMAL:
                     if (levelType == TYPE.A)
                     {
-                        var spawnVector = new Vector3(PrefabNormalA.transform.position.x,
-                            transform.position.y + PrefabNormalA.transform.position.y);
-                        Instantiate(PrefabNormalA, spawnVector, Quaternion.identity);
+                        spawnedPiece = PrefabNormalA;
 
                     }
                     else if (levelType == TYPE.B)
                     {
-                        var spawnVector = new Vector3(PrefabNormalB.transform.position.x,
-                            transform.position.y + PrefabNormalB.transform.position.y);
-                        Instantiate(PrefabNormalB, spawnVector, Quaternion.identity);
+                        spawnedPiece = PrefabNormalB;
 
                     }
-                    else if (levelType == TYPE.C && levelType != TYPE.B || levelType != TYPE.A)
+                    else if (levelType == TYPE.C)
                     {
-                        var spawnVector = new Vector3(PrefabNormalC.transform.position.x,
-                            PrefabNormalC.transform.position.y + transform.position.y);
-                        Instantiate(PrefabNormalC, spawnVector, Quaternion.identity);
+                        spawnedPiece = PrefabNormalC;
                     }
 
                     break;
@@ -126,25 +115,23 @@ public class Spawner : MonoBehaviour
                 case DIFFICULTY.HARD:
                     if (levelType == TYPE.A)
                     {
-                        var spawnVector = new Vector3(PrefabHardA.transform.position.x,
-                            transform.position.y + PrefabHardA.transform.position.y);
-                        Instantiate(PrefabHardA, spawnVector, Quaternion.identity);
+                        spawnedPiece = PrefabHardA;
                     }
                     else if (levelType == TYPE.B)
                     {
-                        var spawnVector = new Vector3(PrefabHardB.transform.position.x,
-                            transform.position.y + PrefabHardB.transform.position.y);
-                        Instantiate(PrefabHardB, spawnVector, Quaternion.identity);
+                        spawnedPiece = PrefabHardB;
                     }
-                    else if (levelType == TYPE.C && levelType != TYPE.B || levelType != TYPE.A)
+                    else if (levelType == TYPE.C)
                     {
-                        var spawnVector = new Vector3(PrefabHardC.transform.position.x,
-                            PrefabHardC.transform.position.y + transform.position.y);
-                        Instantiate(PrefabHardC, spawnVector, Quaternion.identity);
+                        spawnedPiece = PrefabHardC;
                     }
 
                     break;
             }
+
+            var spawnVector = new Vector3(spawnedPiece.transform.position.x,
+                transform.position.y + spawnedPiece.transform.position.y);
+            Instantiate(spawnedPiece, spawnVector, Quaternion.identity);
 
             MoveSpawnerToNextArea();
         }
