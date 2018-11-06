@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static Player _instance;
 
     const int MAX_BODY_PARTS = 15;
     const float maxAngleR = -45f;
@@ -26,6 +27,14 @@ public class Player : MonoBehaviour
     
     
     void Start () {
+        if (_instance == null)
+        {
+            _instance = this;
+        } else if (_instance != this)
+        {
+            Destroy(this);
+        }
+
 
         for (var i = 0; i < beginSize - 1; i++)
         {
@@ -33,7 +42,11 @@ public class Player : MonoBehaviour
         }
 
         StartCoroutine("RevEngine");
-        StartCoroutine("FillBuffer");
+        //StartCoroutine("FillBuffer");
+
+
+        if (TransformationBuffer._instance == null)
+            Debug.Log("buffer missing");
     }
     
     void Update () {
@@ -80,7 +93,7 @@ public class Player : MonoBehaviour
                                                             BodyParts[BodyParts.Count - 1].position,
                                                             BodyParts[BodyParts.Count - 1].up);
 
-        partClass.Setup(BodyParts.Count -1, tranformation);
+        partClass.Setup(BodyParts.Count -1, tranformation, BodyParts[BodyParts.Count - 1]);
 
         newPart.SetParent(transform);
         BodyParts.Add(newPart);
@@ -101,17 +114,16 @@ public class Player : MonoBehaviour
 
 
     // Store a circular buffer of Transformations (pos/rot) that creat a path of waypoints
-    IEnumerator FillBuffer()
+    //IEnumerator FillBuffer()
+    void LateUpdate()
     {
+        //while (true)
+        //{
         var head = BodyParts[0];
-        if (TransformationBuffer._instance == null) 
-            Debug.Log("buffer missing");
-        while (true)
-        {
-            Transformation t = new Transformation(head.rotation, head.position, head.up);
-            TransformationBuffer._instance.AddTransformation(t);
+        Transformation t = new Transformation(head.rotation, head.position, head.up);
+        TransformationBuffer._instance.AddTransformation(t);
 
-            yield return new WaitForSeconds(0.1f);
-        }
+        //yield return new WaitForSeconds(1 * Time.deltaTime);
+        //}
     }
 }

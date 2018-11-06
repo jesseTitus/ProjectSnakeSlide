@@ -17,11 +17,8 @@ public class Follow : MonoBehaviour
 
     void Start()
     {
-        FollowTransform = FindObjectOfType<Player>().transform;
         vec = transform.position;
-        //yDistance = transform.position.y - FollowTransform.position.y;
         yDistance = transform.position.y;
-        //Debug.Log(string.Format("X {0} Y {1} Z{1}", vec.x, vec.y, vec.z));
     }
 
     /// <summary>
@@ -31,14 +28,14 @@ public class Follow : MonoBehaviour
     /// </summary>
     void Update ()
     {
-        var player = GameObject.FindGameObjectWithTag("Player");
-        if (player == null)
+        //var player = GameObject.FindGameObjectWithTag("Player");
+        if (Player._instance == null)
         {
             Debug.Log("Player not found... can't follow");
             return;
         }
 
-        FollowTransform = player.transform;
+        FollowTransform = Player._instance.transform.GetChild(0);
 
         if (followHor)
         {

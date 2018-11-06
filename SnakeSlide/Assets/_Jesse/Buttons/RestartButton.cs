@@ -12,7 +12,6 @@ public class RestartButton : MonoBehaviour, IButtonAction
     }
     public void Execute()
     {
-        Debug.Log("Resart");
         gameManager.Restart();
     }
 }

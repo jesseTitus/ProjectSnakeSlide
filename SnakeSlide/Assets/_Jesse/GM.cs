@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -9,6 +12,7 @@ public class GM : MonoBehaviour
     #region STATES
     public enum GAMESTATE
     {
+        LOAD,
         GAMEOVER,
         RESTART,
         PLAY,
@@ -26,9 +30,14 @@ public class GM : MonoBehaviour
             Debug.Log(string.Format("Gamestate: {0}", value));
             switch (value)
             {
+                case GAMESTATE.LOAD:
+                    Load();
+                    Gamestate = GAMESTATE.PLAY;
+                    break;
+
                 case GAMESTATE.LOSE:
-                    soundManager.SwitchMusic(false);
-                    soundManager.PlayDieSound();
+                    SoundManager._instance.PlayMusic(false);
+                    SoundManager._instance.PlayDieSound();
                     Gamestate = GAMESTATE.GAMEOVER;
                     break;
 
@@ -42,8 +51,7 @@ public class GM : MonoBehaviour
 
                 case GAMESTATE.PLAY:
                     DisplayRestart();
-                    Instantiate(player);
-                    soundManager.SwitchMusic(true);
+                    SoundManager._instance.PlayMusic(true);
                     break;
 
             }
@@ -53,13 +61,10 @@ public class GM : MonoBehaviour
 
     #endregion
 
-    public SoundManager soundManager;
-    public GameObject player;
+    public static GM _instance;
 
     public GameObject InGameCanvas;
     public GameObject GameOverCanvas;
-
-    Spawner spawner;
 
     public Text scoreText;
     public Text scoreEndText;
@@ -74,30 +79,46 @@ public class GM : MonoBehaviour
     //-------
     void Awake()
     {
-        Gamestate = GAMESTATE.PLAY;
-        spawner = FindObjectOfType<Spawner>();
+        if (_instance == null)
+        {
+            _instance = this;
+        } else if (_instance != this)
+        {
+            Destroy(this);
+        }
+
+    }
+
+    void Start()
+    {
+        Gamestate = GAMESTATE.LOAD;
     }
 
 
     #region scoreHandling
     public void PointsUp()
     {
-        soundManager.PlayPointSound();
+        SoundManager._instance.PlayPointSound();
         if (++points > highScore)
+        {
             highScore = points;
+            Save();
+        }
 
         scoreText.text = points.ToString();
     }
 
     public void GemsUp()
     {
-        soundManager.PlayGemSound();
+        SoundManager._instance.PlayGemSound();
         gems++;
+        Save();
     }
 
     public void GemsUp(int amt) // For microtransactions
     {
         gems += amt;
+        Save();
     }
     #endregion
     
@@ -122,5 +143,54 @@ public class GM : MonoBehaviour
     {
         Gamestate = GAMESTATE.RESTART;
         
+    }
+
+    #region SAVE/LOAD
+    public void Save()
+    {
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "/playerInfo.dat");
+
+        PlayerData data = new PlayerData(highScore, gems, SoundManager._instance.audioPreferences);
+        
+        // take our playerdata and save it to "file"
+        bf.Serialize(file, data);   
+        file.Close();
+    }
+
+    public void Load()
+    {
+        // get highscore, sound preference, gems
+        if (!File.Exists(Application.persistentDataPath + "/playerInfo.dat"))
+        {
+            Save();
+        }
+
+        //Debug.Log(Application.persistentDataPath + "/playerInfo.dat");
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat",FileMode.Open);
+        PlayerData data = (PlayerData)bf.Deserialize(file);
+        file.Close();
+
+        // Setup data
+        highScore = data.highscore;
+        gems = data.gems;
+        SoundManager._instance.audioPreferences = data.audioPreferences;
+    }
+    #endregion
+}
+
+[Serializable]  // serializable: can now save this to a file (no monobehavior's allowed!)
+class PlayerData
+{
+    public int highscore;
+    public int gems;
+    public bool audioPreferences;
+
+    public PlayerData(int highscore, int gems, bool audioPreference)
+    {
+        this.highscore = highscore;
+        this.gems = gems;
+        this.audioPreferences = audioPreference;
     }
 }

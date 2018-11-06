@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3326e1e700211d40b8e8617dd53491d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugMode: 1
+  debugMode: 0
   BodyParts:
   - {fileID: 4696005075668596}
   beginSize: 1

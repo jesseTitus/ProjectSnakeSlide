@@ -10,8 +10,8 @@ public class TransformationBuffer : MonoBehaviour
 
     public static TransformationBuffer _instance;
 
-    List<Transformation> _transformations = new List<Transformation>();
-    int framesTracked = 30;
+    public List<Transformation> _transformations = new List<Transformation>();
+    int framesTracked = 300;
 
     // Adding newest at end of buffer
     // deleting oldest if buffer full
@@ -45,7 +45,7 @@ public class TransformationBuffer : MonoBehaviour
     {
         //Debug.Log(_transformations.Count);
         //debugBuffer = wayPointsBuffer.Select(v => v.position).ToList();
-        for (var i = 1; i < _transformations.Count; i++)
+        for (var i = 1; i < _transformations.Count; i+=2)
         {
             Debug.DrawLine(_transformations[i-1].position, _transformations[i].position, Color.red);
         }
